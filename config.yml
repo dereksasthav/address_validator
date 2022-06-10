@@ -1,4 +1,5 @@
 api:
   api_key: 'av-3e87cf5eb3fafa129cbe67cf7b88c283'
   api_url: 'https://api.address-validator.net/api/verify?StreetAddress={}&City={}&PostalCode={}&CountryCode=US&Geocoding=true&APIKey={}'
-  
+output:
+  output_file: 'data/output.csv'

@@ -60,15 +60,13 @@ class TestAddress(unittest.TestCase):
     def test_return_valid_address(self):
 
         print('test_return_valid_address')
-        #self.tst1.get_api_response()
-        #self.assertEqual(self.tst1.return_valid_address(), 'Invalid Address')
+        self.tst1.get_api_response()
+        self.assertEqual(self.tst1.return_valid_address(), 'Invalid Address')
 
         self.tst2.get_api_response()
         tst2_address = self.tst2.return_valid_address()
-        print(tst2_address)
         self.assertEqual(tst2_address, '123 E Main St, Columbus, 43215-5207')
-
-
+    
         
 if __name__ == '__main__':
     unittest.main()

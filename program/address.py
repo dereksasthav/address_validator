@@ -25,6 +25,9 @@ class Address:
         self.is_valid = False 
         self.api_response = None
 
+    def __repr__(self):
+        return '{}, {}, {}'.format(self.street, self.city, self.postal_code)
+
     def construct_url(self) -> str:
         """
         Fill in API call URL with street, city, postal code, and API key
@@ -57,14 +60,19 @@ class Address:
 
 
     def return_valid_address(self) -> str:
+        """
+        Purpose: parse API response from address validator website
 
+        Output: str with API response text
+        
+        """
         if self.api_response != None:
             print(self.api_response)
             if self.api_response['status'] in ['VALID', 'SUSPECT']:
-                result = f"{} {}, {}, {}".format(self.api_response['streetnumber'],
-                self.api_response['street'],
-                self.api_response['state'],
-                self.api_response['postalcode'])
+                result = "{} {}, {}, {}".format(self.api_response['streetnumber'],
+                    self.api_response['street'],
+                    self.api_response['city'],
+                    self.api_response['postalcode'])
                 print(result)
                 return result
             else:

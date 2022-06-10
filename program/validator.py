@@ -1,5 +1,9 @@
+from ast import Add
 from os.path import exists 
-from csv import reader
+from csv import reader, writer
+from program.address import Address
+from program.utils import get_config
+
 
 class Validator:
 
@@ -9,16 +13,15 @@ class Validator:
         """
 
         if not exists(inputFileName):
-            raise FileNotFoundError("File named {} was not found. Please enter a valid filename!")
+            raise FileNotFoundError("File named {} was not found. Please enter a valid filename!".format(inputFileName))
 
         if not inputFileName.endswith('.csv'):
             raise ValueError("Input Filename needs to end with .csv")
         
         self.inputFileName = inputFileName
-        self.outputFileName = './data/output.csv'
         self.inputData = None
         self.lineCount = 0
-        self.outputData = None
+        self.outputData = []
 
     def load_data(self):
         """
@@ -45,13 +48,46 @@ class Validator:
         self.inputData = result
         self.lineCount = max(0,lineCount - 1) # if only header row, return 0
 
-    def validate_data(self):
+    def validate_data(self) -> str:
+
+        self.outputData = []
 
         if self.inputData != None and self.lineCount > 0:
 
             for addr in self.inputData[1:]:
 
                 # create address object
+                street, city, postal_code = addr
+                add = Address(street, city, postal_code)
+
                 # validate data
-                pass
+                add.get_api_response()
+                valid_address = add.return_valid_address()
+                self.outputData.append((repr(add), valid_address))
     
+    def output_data(self):
+        """
+        Purpose: write output data to file
+
+        Output a file with the file name defined in config.yml
+        """
+        cfg = get_config()
+        output_filename = cfg['output']['output_file']
+
+        if len(self.outputData) > 0:
+
+            # open the file in the write mode
+            with open(output_filename, 'w') as f:
+
+                # create the csv writer
+                writer = writer(f)
+                
+                # write a row to the csv file
+                for pre, post in zip(self.inputData[1:], self.outputData):
+                    row = pre + ' -> ' + post
+                    writer.writerow(row)
+
+    def run(self):
+        self.load_data()
+        self.validate_data()
+        self.output_data()
