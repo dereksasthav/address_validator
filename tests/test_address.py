@@ -70,10 +70,3 @@ class TestAddress(unittest.TestCase):
         
 if __name__ == '__main__':
     unittest.main()
-    
-
-"""
-{'status': 'SUSPECT', 'ratelimit_remain': 97, 'ratelimit_seconds': 225, 'cost': 1.5, 'formattedaddress': '123 E Main St,Columbus OH 43215-5207', 'addressline1': '123 E Main St', 'addresslinelast': 'Columbus OH 43215-5207', 'street': 'E Main St', 'streetnumber': '123', 'postalcode': '43215-5207', 'city': 'Columbus', 'state': 'OH', 'country': 'US', 'county': 'Franklin', 'diagnostics': 'ward mult', 'type': 'S', 'latitude': 39.9563931, 'longitude': -82.9960062}
-123 E Main St, Columbus, 43215-5207
-{'status': 'INVALID', 'ratelimit_remain': 96, 'ratelimit_seconds': 224, 'cost': 1.5, 'formattedaddress': '1 Empora St,Title 11111', 'addressline1': '1 Empora St', 'addresslinelast': 'Title 11111', 'street': 'Empora St', 'streetnumber': '1', 'postalcode': '11111', 'city': 'Title', 'country': 'US'}
-"""
