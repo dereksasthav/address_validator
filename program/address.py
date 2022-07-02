@@ -22,7 +22,6 @@ class Address:
         self.city = city 
         self.postal_code = str(postal_code)
         self.valid_address = None 
-        self.is_valid = False 
         self.api_response = None
 
     def __repr__(self):
@@ -64,18 +63,18 @@ class Address:
         Purpose: parse API response from address validator website
 
         Output: str with API response text
-        
         """
         if self.api_response != None:
             print(self.api_response)
+
+            # parse the API response
             if self.api_response['status'] in ['VALID', 'SUSPECT']:
                 result = "{} {}, {}, {}".format(self.api_response['streetnumber'],
                     self.api_response['street'],
                     self.api_response['city'],
                     self.api_response['postalcode'])
-                print(result)
                 self.valid_address = result
-                return result
             else:
                 self.valid_address = 'Invalid Address' 
-                return 'Invalid Address'
+                
+        return self.valid_address

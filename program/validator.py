@@ -23,9 +23,9 @@ class Validator:
             raise ValueError("Input Filename needs to end with .csv")
         
         self.inputFileName = inputFileName
-        self.inputData = None
+        self.inputData = None # store results of CSV input file
         self.lineCount = 0
-        self.outputData = []
+        self.outputData = [] # store results of API response
 
     def load_data(self):
         """
@@ -33,8 +33,13 @@ class Validator:
 
         Output: list of lists, each element is a row of data from the input file, should be 3 elements each
         """
+
+        print("Loading data from input file: {}".format(self.inputFileName))
+
         result = []
         lineCount = 0
+
+        # read input file
         with open(self.inputFileName) as f:
             csv_reader = reader(f, delimiter=",")
             for row in csv_reader:
@@ -53,6 +58,8 @@ class Validator:
         self.lineCount = max(0,lineCount - 1) # if only header row, return 0
 
     def validate_data(self) -> str:
+
+        print("Validating address data...")
 
         self.outputData = []
 
@@ -75,8 +82,12 @@ class Validator:
 
         Output a file with the file name defined in config.yml
         """
+
         cfg = get_config()
         output_filename = cfg['output']['output_file']
+
+        
+        print("Outputting address data to {}".format(output_filename))
 
         if len(self.outputData) > 0:
 
@@ -89,6 +100,7 @@ class Validator:
                 # write a row to the csv file
                 for output in self.outputData:
                     pre, post = output
+                    print(pre, '->', post)
                     row = [' '.join([pre, '->', post])]
                     csvWriter.writerow(row)
 
