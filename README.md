@@ -1,9 +1,9 @@
 # address_validator
-Validates addresses with API
+Validates input addresses with API and writes validated responses to file
 
 Author: Derek Sasthav
 
-## Setup:
+## Setup
 This program can be executed in the command line with Python.
 
 First, you must activate a virtual environment and install the proper packages per the requirements.txt file
@@ -18,7 +18,7 @@ The API credentials can be configured in the *config.yml* file. This file also a
 
 ## How to Run the Code
 
-Then, you can run the command line program with this line:
+Run the command line program with this line:
 
 ```
 python -m program input_filename.csv
@@ -49,7 +49,7 @@ deactivate
 
 2. To reduce the number of API calls, I tested the validator.validate_data class method with a mock API call. See the method test_address.TestAddress.test_get_api_response
 
-## Future Improvements:
+## Future Improvements
 
 1. Right now, the address class returns 3 specific fields to the Validator class when I output the data.Then, the validator class has to parse 3 specific fields before outputting the data. I would rather generalize this so that the Validator class outputs whatever is returned from the Address class
 
