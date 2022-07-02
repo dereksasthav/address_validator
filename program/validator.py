@@ -1,6 +1,7 @@
 from ast import Add
+from pathlib import Path
 from os.path import exists 
-from csv import reader, writer
+from csv import reader, writer, QUOTE_NONE
 from program.address import Address
 from program.utils import get_config
 
@@ -9,10 +10,13 @@ class Validator:
 
     def __init__(self, inputFileName: str):
         """
-        inputFileName: string for input CSV file
+        Purpose: check if file exists
+
+        Args:        
+            inputFileName: string for input CSV file
         """
 
-        if not exists(inputFileName):
+        if not exists(Path(inputFileName)):
             raise FileNotFoundError("File named {} was not found. Please enter a valid filename!".format(inputFileName))
 
         if not inputFileName.endswith('.csv'):
@@ -77,15 +81,18 @@ class Validator:
         if len(self.outputData) > 0:
 
             # open the file in the write mode
-            with open(output_filename, 'w') as f:
+            with open(output_filename, 'w', newline="") as f:
 
                 # create the csv writer
-                writer = writer(f)
+                csvWriter = writer(f, quoting=QUOTE_NONE, delimiter = '|', quotechar='', escapechar='\\')
                 
                 # write a row to the csv file
-                for pre, post in zip(self.inputData[1:], self.outputData):
-                    row = pre + ' -> ' + post
-                    writer.writerow(row)
+                for output in self.outputData:
+                    pre, post = output
+                    row = [' '.join([pre, '->', post])]
+                    csvWriter.writerow(row)
+
+                f.close()
 
     def run(self):
         self.load_data()

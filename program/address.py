@@ -74,6 +74,8 @@ class Address:
                     self.api_response['city'],
                     self.api_response['postalcode'])
                 print(result)
+                self.valid_address = result
                 return result
             else:
+                self.valid_address = 'Invalid Address' 
                 return 'Invalid Address'
